@@ -11,10 +11,13 @@ function MediumLightbox(element, options) {
 	// quit if no root element
 	if (!element) return;
 
-	var zoomedImg;
+	var zoomedImg = document.createElement('div');
+	zoomedImg.className = 'zoom-wrapper';
 	var screenSize ={};
 	var options = options || {};
 	var margin = options.margin || 50;
+	var container = options.container || 'body';
+	var isZoomed = false;
 
 	// Get the scrollbar width
 	var scrollDiv = document.createElement("div");
@@ -41,33 +44,27 @@ function MediumLightbox(element, options) {
 	//recalc size screen on resize
 	window.addEventListener("resize", updateScreenSize);
 
-
 	function zoom(){
-
-		if(!this.isZoomed){
+		if(!isZoomed){
 
 			//Set status
-			this.isZoomed = !this.isZoomed;
+			isZoomed = !isZoomed;
 
 			//Get image to be removed on scroll
-			zoomedImg = this;
+			var origImg = this;
 
-			//Get img node
-			if(!zoomedImg.img)
-				zoomedImg.img = zoomedImg.getElementsByTagName('img')[0];
-
-			//Get img size
-			var imgH = zoomedImg.img.getBoundingClientRect().height;
-			var imgW = zoomedImg.img.getBoundingClientRect().width;
-			var imgL = zoomedImg.img.getBoundingClientRect().left;
-			var imgT = zoomedImg.img.getBoundingClientRect().top;
+			var imgH = origImg.getBoundingClientRect().height;
+			var imgW = origImg.getBoundingClientRect().width;
+			var imgL = origImg.getBoundingClientRect().left;
+			var imgT = origImg.getBoundingClientRect().top;
 			var realW, realH, fullSizeSrc;
 
+			zoomedImg.img = this.cloneNode(false);
 			// Get full src
-			if(zoomedImg.img.dataset){
-				fullSizeSrc = zoomedImg.img.dataset.src;
+			if(origImg.dataset){
+				fullSizeSrc = origImg.dataset.src;
 			}else{
-				fullSizeSrc = zoomedImg.img.getAttribute("data-src");
+				fullSizeSrc = origImg.getAttribute("data-src");
 			}
 
 
@@ -83,33 +80,31 @@ function MediumLightbox(element, options) {
 					zoomedImg.img.setAttribute("data-orig-src",zoomedImg.img.src);
 				}
 				zoomedImg.img.src = fullSizeSrc;
-				//add class to img
-				if (zoomedImg.img.classList)
-					zoomedImg.img.classList.add('zoomImg');
-				else
-					zoomedImg.img.className += ' ' + 'zoomImg';
-
-
+				zoomedImg.img.className = 'zoomed-img';
+				zoomedImg.img.style.top = imgT + 'px';
+				zoomedImg.img.style.left = imgL + 'px';
+				zoomedImg.img.style.width = imgW + 'px';
+				zoomedImg.img.style.height = imgH + 'px';
+				zoomedImg.img.styleOrig = zoomedImg.img.style.cssText;
 				//create overlay div
 				zoomedImg.overlay = document.createElement('div');
-				zoomedImg.overlay.id = 'the-overlay';
-				zoomedImg.overlay.className = 'zoomOverlay';
-				zoomedImg.overlay.style.cssText = 'height:'+(screenSize.y)+'px; width: '+screenSize.x+'px; top: -'+ ((screenSize.y-imgH)/2) +'px; left: -'+((screenSize.x-imgW)/2)+'px;';
-
+				zoomedImg.overlay.className = 'zoom-overlay';
+				zoomedImg.overlay.style.cssText = 'height:'+(screenSize.y)+'px; width: '+screenSize.x+'px;';
 
 				//create wrapper for img and set attributes
 				zoomedImg.wrapper = document.createElement('div');
-				zoomedImg.wrapper.id = 'the-wrapper';
-				zoomedImg.wrapper.className = 'zoomImg-wrap zoomImg-wrap--absolute';
+				zoomedImg.wrapper.className = 'zoomed-img-wrap';
+
 				// this.wrapper.style.cssText = 'transform: translate(0px, 0px) translateZ(0px);';
 				zoomedImg.wrapper.appendChild(zoomedImg.img);
 
+				//append element to body
+				zoomedImg.appendChild(zoomedImg.overlay);
+				zoomedImg.appendChild(zoomedImg.wrapper);
+				container === 'body' ?
+					document.body.appendChild(zoomedImg) : document.getElementById(container).appendChild(zoomedImg);
 
-				//appen element to body
-				zoomedImg.wrapper.appendChild(zoomedImg.overlay);
-				zoomedImg.children[0].appendChild(zoomedImg.wrapper);
-
-
+					zoomedImg.addEventListener("click", zoom);
 				//wrap coordinates
 				var wrapX = ((screenSize.x-scrollbarWidth)/2)-imgL - (imgW/2);
 				var wrapY = imgT*(-1) + (screenSize.y-imgH)/2;
@@ -148,47 +143,24 @@ function MediumLightbox(element, options) {
 					scale = realW/imgW;
 				}
 
-	      //Add zommed values: x,y and scale
-	      var that = zoomedImg;
 	      setTimeout(function(){
-	          that.wrapper.style.cssText = 'transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);-webkit-transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);';
-	          that.img.style.cssText="transform: scale("+scale+");-webkit-transform: scale("+scale+")";
-	          that.overlay.className = 'zoomOverlay show';
+	          zoomedImg.wrapper.style.cssText = 'transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);-webkit-transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);';
+	          zoomedImg.img.style.cssText += "transform: scale("+scale+");-webkit-transform: scale("+scale+")";
+	          zoomedImg.overlay.className = 'zoom-overlay show';
 	      },0);
 			}
 
 			img.src = fullSizeSrc;
-		}else{
-			this.isZoomed = !this.isZoomed;
-
-			// reset orig img src
-			if(zoomedImg.img.dataset){
-				this.img.src = zoomedImg.img.dataset.origSrc;
-			}
-			else {
-				this.img.src = zoomedImg.img.getAttribute("data-orig-src");
-			}
-
-			//remove from zoomeImg
-			zoomedImg = null
-
-			//remove style
-			this.img.style.cssText="";
-			this.wrapper.style.cssText = '';
-			this.overlay.className = 'zoomOverlay';
-
-			//remove element
-			var that = this;
+		}
+		else {
+			isZoomed = !isZoomed;
+			zoomedImg.overlay.className = 'zoom-overlay';
+			zoomedImg.wrapper.style.cssText = '';
+			zoomedImg.img.style.cssText = zoomedImg.img.styleOrig;
+			zoomedImg.removeEventListener("click", zoom);
 			setTimeout(function(){
-				that.children[0].appendChild(that.img)
-				that.children[0].removeChild(that.wrapper)
-
-				var className = 'zoomImg'
-				if (that.img.classList)
-					that.img.classList.remove(className);
-				else
-					that.img.className = that.img.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-
+				container === 'body' ? document.body.removeChild(zoomedImg) : document.getElementById(container).removeChild(zoomedImg);
+				zoomedImg.innerHTML = "";
 			},300)
 		}
 	}
@@ -208,3 +180,4 @@ function MediumLightbox(element, options) {
 
 	window.addEventListener("scroll", zoomOut);
 }
+export default MediumLightbox

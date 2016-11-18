@@ -19,19 +19,15 @@ Written in pure javascript for better performance, lightweight and simple.
 
 **html**
 
-    <figure class="half left zoom-effect">
-        <div class="aspectRatioPlaceholder" >
-            <div class="aspect-ratio-fill" style="padding-bottom: 50%;"></div>
-            <img class="img" src="image_tn.jpg" data-src="image.jpg">
-        </div>
-    </figure>
+    <img class="img" src="image_tn.jpg" data-src="image.jpg">
 
 **Initialize plugin**
 
-	MediumLightbox('figure.zoom-effect');
+	MediumLightbox('.img');
 ####Option
 
-    MediumLightbox('figure.zoom-effect', {
-        margin:40
+    MediumLightbox('.img', {
+        margin:40,
+        container:'app'
     });
 * **Margin** - default: 20 - Margin in px applied to the image in zoomed view.

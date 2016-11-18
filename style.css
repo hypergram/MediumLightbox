@@ -14,25 +14,6 @@ html, body {
 	margin: 0 auto;
 }
 
-figure{
-	margin: 0px;
-	position: relative;
-	clear: both;
-	margin: 20px;
-}
-
-figure.left{
-	margin-left: 0;
-}
-
-figure.right{
-	margin-right: 0;
-}
-
-figure.full{
-	margin-left:0;
-	margin-right:0;
-}
 
 .one-third {
 	width: calc(100%/3);
@@ -73,48 +54,39 @@ figure.full{
 }
 
 
-.aspectRatioPlaceholder .img {
-	position: absolute;
+.zoom-wrapper {
+	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 100%;
+	bottom: 0;
+	right:0;
 }
 
-
-
-.zoom-effect .img{
+.img{
 	cursor: pointer;
 	cursor: -webkit-zoom-in;
 }
-
-.zoom-effect .zoomImg,
-.zoom-effect .zoomImg-wrap {
+.zoomed-img, .zoomed-img-wrap {
 	position: relative;
 	z-index: 900;
 	transition: all 300ms;
 }
 
-.zoom-effect .zoomImg-wrap--absolute {
+.zoomed-img-wrap {
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	top:0;
+	left:0;
 }
-
-
-.zoom-effect .zoomImg {
+.zoomed-img {
 	cursor: pointer;
 	cursor: -webkit-zoom-out;
 }
 
-
-.zoom-effect .zoomOverlay.show{
+.zoom-overlay.show{
 	opacity: 1;
 }
 
-.zoom-effect .zoomOverlay {
+.zoom-overlay {
 	z-index: 800;
 	background: #fff;
 	position: absolute;
@@ -122,4 +94,8 @@ figure.full{
 	opacity: 0;
 	cursor: pointer;
 	cursor: -webkit-zoom-out;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
 }
