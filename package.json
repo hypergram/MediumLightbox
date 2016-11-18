@@ -7,6 +7,7 @@
     "type": "git",
     "url": "https://github.com/hypergram/medium-lightbox.git"
   },
+  "sourceType": "module",
   "browserify": {
    "transform": [
      "babelify"
