@@ -1,0 +1,60 @@
+.scrollbar-measure {
+	width: 100px;
+	height: 100px;
+	overflow: scroll;
+	position: absolute;
+	top: -9999px;
+}
+
+.img {
+	display: block;
+	margin: auto;
+	max-width: 100%;
+}
+
+
+.zoom-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right:0;
+}
+
+.img{
+	cursor: pointer;
+	cursor: -webkit-zoom-in;
+}
+.zoomed-img, .zoomed-img-wrap {
+	position: relative;
+	z-index: 900;
+	transition: all 300ms;
+}
+
+.zoomed-img-wrap {
+	position: absolute;
+	top:0;
+	left:0;
+}
+.zoomed-img {
+	cursor: pointer;
+	cursor: -webkit-zoom-out;
+}
+
+.zoom-overlay.show{
+	opacity: 1;
+}
+
+.zoom-overlay {
+	z-index: 800;
+	background: #fff;
+	position: absolute;
+	transition: opacity 300ms;
+	opacity: 0;
+	cursor: pointer;
+	cursor: -webkit-zoom-out;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+}

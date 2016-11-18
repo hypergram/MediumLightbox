@@ -1,6 +1,8 @@
 {
   "name": "medium-lightbox-hypergram",
+  "description":"Nice and elegant way to add zooming functionality for images",
   "version": "1.1.1",
+  "main": "./medium-lightbox.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/hypergram/medium-lightbox.git"
