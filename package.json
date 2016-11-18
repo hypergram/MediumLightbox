@@ -6,5 +6,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/hypergram/medium-lightbox.git"
+  },
+  "browserify": {
+   "transform": [
+     "babelify"
+   ]
   }
 }
