@@ -1,0 +1,8 @@
+{
+  "name": "medium-lightbox-hypergram",
+  "version": "1.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hypergram/mediumlightbox.git"
+  }
+}

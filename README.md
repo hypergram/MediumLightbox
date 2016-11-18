@@ -8,7 +8,7 @@ This plugin reproduce exactly the same code that use Medium to add the smooth tr
 * **It's simple**, unlike [Fluidbox](http://terrymun.github.io/Fluidbox/).
 
 #####Key features
-Written in pure javascript for better performance, lightweight and simple. [View demo](http://davidecalignano.it/project/files/medium-lightbox/demo/demo.html).
+Written in pure javascript for better performance, lightweight and simple.
 #####Use
 
 **Include**
@@ -22,15 +22,9 @@ Written in pure javascript for better performance, lightweight and simple. [View
     <figure class="half left zoom-effect">
         <div class="aspectRatioPlaceholder" >
             <div class="aspect-ratio-fill" style="padding-bottom: 50%;"></div>
-            <img class="img" data-width="900" data-height="450" src="image.jpg">
+            <img class="img" src="image_tn.jpg" data-src="image.jpg">
         </div>
     </figure>
-    
-To do some calculations some attributes are necessary:
-* **data-width**: the real width of the image.
-* **data-height**: the real height of the image.
-* To the div with **aspect-ratio-fill** class is applied a padding-bottom that is the aspect ratio of the image. 
-The aspect ratio percentage is found with [(height/width)*100] formula.
 
 **Initialize plugin**
 
@@ -41,7 +35,3 @@ The aspect ratio percentage is found with [(height/width)*100] formula.
         margin:40
     });
 * **Margin** - default: 20 - Margin in px applied to the image in zoomed view.
-
-
-####Preview | [Live demo](http://davidecalignano.it/project/files/medium-lightbox/demo/demo.html)
-![alt text](http://davidecalignano.it/project/files/medium-lightbox/medium-lightbox-demo.gif "Demo")
