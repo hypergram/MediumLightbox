@@ -181,4 +181,4 @@ function MediumLightbox(element, options) {
 	window.addEventListener("scroll", zoomOut);
 }
 
-module.exports MediumLightbox
+module.exports = MediumLightbox
