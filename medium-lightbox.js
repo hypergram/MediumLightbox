@@ -17,6 +17,7 @@ function MediumLightbox(element, options) {
 	var options = options || {};
 	var margin = options.margin || 50;
 	var container = options.container || 'body';
+	var isCaption = options.caption || false;
 	var isZoomed = false;
 
 	// Get the scrollbar width
@@ -101,6 +102,12 @@ function MediumLightbox(element, options) {
 				//append element to body
 				zoomedImg.appendChild(zoomedImg.overlay);
 				zoomedImg.appendChild(zoomedImg.wrapper);
+				if(isCaption) {
+					zoomedImg.caption = document.createElement('div');
+					zoomedImg.caption.className = 'zoom-caption';
+					zoomedImg.caption.innerHTML = zoomedImg.img.title || "";
+					zoomedImg.appendChild("zoomedImg.caption");
+				}
 				container === 'body' ?
 					document.body.appendChild(zoomedImg) : document.getElementById(container).appendChild(zoomedImg);
 
@@ -108,7 +115,6 @@ function MediumLightbox(element, options) {
 				//wrap coordinates
 				var wrapX = ((screenSize.x-scrollbarWidth)/2)-imgL - (imgW/2);
 				var wrapY = imgT*(-1) + (screenSize.y-imgH)/2;
-
 
 
 				//Calc scale
