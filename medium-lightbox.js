@@ -106,7 +106,7 @@ function MediumLightbox(element, options) {
 					zoomedImg.caption = document.createElement('div');
 					zoomedImg.caption.className = 'zoom-caption';
 					zoomedImg.caption.innerHTML = zoomedImg.img.title || "";
-					zoomedImg.appendChild("zoomedImg.caption");
+					zoomedImg.appendChild(zoomedImg.caption);
 				}
 				container === 'body' ?
 					document.body.appendChild(zoomedImg) : document.getElementById(container).appendChild(zoomedImg);
