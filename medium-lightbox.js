@@ -153,7 +153,7 @@ function MediumLightbox(element, options) {
 	          zoomedImg.wrapper.style.cssText = 'transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);-webkit-transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);';
 	          zoomedImg.img.style.cssText += "transform: scale("+scale+");-webkit-transform: scale("+scale+")";
 	          zoomedImg.overlay.className = 'zoom-overlay show';
-	      },0);
+	      },100);
 			}
 
 			img.src = fullSizeSrc;
