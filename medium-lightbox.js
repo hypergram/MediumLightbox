@@ -62,7 +62,11 @@ function MediumLightbox(element, options) {
 			var imgT = origImg.getBoundingClientRect().top;
 			var realW, realH, fullSizeSrc;
 
-			zoomedImg.img = this.cloneNode(false);
+			// zoomedImg.img = this.cloneNode(false);
+
+			//create img not clone (for div backgrounds)
+			zoomedImg.img = document.createElement("img");
+
 			// Get full src
 			if(origImg.dataset){
 				fullSizeSrc = origImg.dataset.src;
