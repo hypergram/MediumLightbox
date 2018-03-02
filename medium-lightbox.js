@@ -118,7 +118,7 @@ function MediumLightbox(element, options) {
 				if (closeIcon) {
 					zoomedImg.close = document.createElement('div');
 					zoomedImg.close.className = 'zoom-close';
-					zoomedImg.caption.innerHTML = closeIcon;
+					zoomedImg.close.innerHTML = closeIcon;
 					zoomedImg.appendChild(zoomedImg.close);
 				}
 				container === 'body' ?
