@@ -44,12 +44,32 @@ function MediumLightbox(element, options) {
 
 	updateScreenSize();
 
+	function unzoom() {
+		isZoomed = !isZoomed;
+			zoomedImg.overlay.className = 'zoom-overlay';
+			zoomedImg.wrapper.style.cssText = '';
+			zoomedImg.img.style.cssText = zoomedImg.img.styleOrig;
+			zoomedImg.removeEventListener("click", zoom);
+			document.removeEventListener("keyup", escapeLB)
+			setTimeout(function(){
+				container === 'body' ? document.body.removeChild(zoomedImg) : document.getElementById(container).removeChild(zoomedImg);
+				zoomedImg.innerHTML = "";
+			},300)
+	}
+
+	function escapeLB(e){
+		if(e.keyCode == 27){
+			unzoom()
+		}
+	}
+
+
 	//recalc size screen on resize
 	window.addEventListener("resize", updateScreenSize);
 
 	function zoom(){
 		if(!isZoomed){
-
+			document.addEventListener("keyup", escapeLB)
 			//Set status
 			isZoomed = !isZoomed;
 
@@ -172,15 +192,7 @@ function MediumLightbox(element, options) {
 			img.src = fullSizeSrc;
 		}
 		else {
-			isZoomed = !isZoomed;
-			zoomedImg.overlay.className = 'zoom-overlay';
-			zoomedImg.wrapper.style.cssText = '';
-			zoomedImg.img.style.cssText = zoomedImg.img.styleOrig;
-			zoomedImg.removeEventListener("click", zoom);
-			setTimeout(function(){
-				container === 'body' ? document.body.removeChild(zoomedImg) : document.getElementById(container).removeChild(zoomedImg);
-				zoomedImg.innerHTML = "";
-			},300)
+			unzoom();
 		}
 	}
 
