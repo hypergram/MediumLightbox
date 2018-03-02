@@ -13,12 +13,14 @@ function MediumLightbox(element, options) {
 
 	var zoomedImg = document.createElement('div');
 	zoomedImg.className = 'zoom-wrapper';
-	var screenSize ={};
+	var screenSize = {};
 	var options = options || {};
 	var margin = options.margin || 50;
 	var container = options.container || 'body';
 	var isCaption = options.caption || false;
 	var isZoomed = false;
+	var timeout = options.timeout || 0;
+	var closeIcon = options.closeIcon || false;
 
 	// Get the scrollbar width
 	var scrollDiv = document.createElement("div");
@@ -107,6 +109,13 @@ function MediumLightbox(element, options) {
 					zoomedImg.caption.className = 'zoom-caption';
 					zoomedImg.caption.innerHTML = zoomedImg.img.title || "";
 					zoomedImg.appendChild(zoomedImg.caption);
+				} 
+
+				if (closeIcon) {
+					zoomedImg.close = document.createElement('div');
+					zoomedImg.close.className = 'zoom-close';
+					zoomedImg.caption.innerHTML = closeIcon;
+					zoomedImg.appendChild(zoomedImg.close);
 				}
 				container === 'body' ?
 					document.body.appendChild(zoomedImg) : document.getElementById(container).appendChild(zoomedImg);
@@ -153,7 +162,7 @@ function MediumLightbox(element, options) {
 	          zoomedImg.wrapper.style.cssText = 'transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);-webkit-transform: translate('+wrapX+'px, '+wrapY+'px) translateZ(0px);';
 	          zoomedImg.img.style.cssText += "transform: scale("+scale+");-webkit-transform: scale("+scale+")";
 	          zoomedImg.overlay.className = 'zoom-overlay show';
-	      },100);
+	      },timeout);
 			}
 
 			img.src = fullSizeSrc;
